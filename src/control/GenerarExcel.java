@@ -97,7 +97,8 @@ public class GenerarExcel {
 
             String query = "SELECT HORA_INGRESO_AM, HORA_SALIDA_PM,HORAS_TRABAJADAS_PM,COMENTARIOS_PM "
                     + "FROM HORA_INGRESO INNER JOIN EMPLEADOS ON EMPLEADOS.ID = HORA_INGRESO.FK_EMPLEADO AND EMPLEADOS.DOCUMENTO = ?";
-            String query2 = "SELECT CONVERT(SUM(HORA_INGRESO.HORAS_TRABAJADAS_PM),TIME) AS \"TIEMPO\" FROM HORA_INGRESO INNER JOIN EMPLEADOS ON EMPLEADOS.ID = HORA_INGRESO.FK_EMPLEADO AND EMPLEADOS.DOCUMENTO = ?";
+            String query2 = "SELECT CAST(CONVERT(SUM(HORA_INGRESO.HORAS_TRABAJADAS_PM),TIME) AS CHAR(20)) AS \"TIEMPO\" "
+                    + "FROM HORA_INGRESO INNER JOIN EMPLEADOS ON EMPLEADOS.ID = HORA_INGRESO.FK_EMPLEADO AND EMPLEADOS.DOCUMENTO = ?";
 
             PreparedStatement PS;
             PS = conexion.getConnection().prepareStatement(query);
@@ -112,6 +113,7 @@ public class GenerarExcel {
                     celdaDatos.setCellStyle(datosEstilo);
                     if (a == 2) {
                         celdaDatos.setCellValue(RS.getTime(a + 1));
+//                        tiempo.add(RS.getString(a + 1));
 //                        sumarTiempo += Integer.parseInt(RS.getString(a + 1));
                     }
                     celdaDatos.setCellValue(RS.getString(a + 1));
@@ -123,7 +125,7 @@ public class GenerarExcel {
             PS2.setString(1, documento);
             ResultSet RS2 = PS2.executeQuery();
             while (RS2.next()) {
-                tiempoTotal = (String) RS2.getString("TIEMPO");
+                tiempoTotal = RS2.getString("TIEMPO");
             }
 
             Row FilaDatos = sheet.createRow(filaDatos);
@@ -132,7 +134,7 @@ public class GenerarExcel {
             celdaDatos.setCellValue("TOTAL HORAS");
             Cell celdaDatos2 = FilaDatos.createCell(2);
             celdaDatos2.setCellStyle(datosEstilo);
-            //celdaDatos2.setCellValue(tiempoTotal.toString());
+            celdaDatos2.setCellValue(tiempoTotal.toString());
 
             for (int x = 0; x < numCols; x++) {
                 sheet.autoSizeColumn(x);
