@@ -5,6 +5,7 @@
  */
 package control;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,13 +36,7 @@ public class GenerarExcel {
 
     DBConnection conexion = new DBConnection();
 
-    public static void main(String args[]) throws SQLException {
-
-        GenerarExcel excel = new GenerarExcel();
-        excel.crearExcel("1064430876");
-    }
-
-    public void crearExcel(String documento) throws SQLException {
+   public void crearExcel(String documento,String hora_entrada,String hora_salida) throws SQLException {
         Workbook book = new HSSFWorkbook();
         Sheet sheet = book.createSheet("REPORTE DE ASISTENCIA");
         try {
@@ -54,6 +49,7 @@ public class GenerarExcel {
                     + "FROM EMPLEADOS INNER JOIN CARGOS ON EMPLEADOS.FK_CARGO = CARGOS.ID  "
                     + "INNER JOIN MUNICIPIOS ON EMPLEADOS.FK_MUNICIPIO = MUNICIPIOS.ID "
                     + "INNER JOIN HORA_INGRESO ON HORA_INGRESO.FK_EMPLEADO = EMPLEADOS.ID AND EMPLEADOS.DOCUMENTO = ?";
+                    
             PreparedStatement PS2 = conexion.getConnection().prepareStatement(consulta);
             PS2.setString(1,documento);
             ResultSet RS2 = PS2.executeQuery();
@@ -133,8 +129,22 @@ public class GenerarExcel {
             celdaDatosPersonales.setCellValue("MUNICIPIO");
             celdaDatosPersonales =  filaDatosPersonales.createCell(1);
             celdaDatosPersonales.setCellValue(municipio);
+            
+            filaDatosPersonales = sheet.createRow(7);
+            celdaDatosPersonales = filaDatosPersonales.createCell(0);
+            celdaDatosPersonales.setCellStyle(headerStyle);
+            celdaDatosPersonales.setCellValue("FECHA INICIAL");
+            celdaDatosPersonales =  filaDatosPersonales.createCell(1);
+            celdaDatosPersonales.setCellValue(hora_entrada);
+            
+            filaDatosPersonales = sheet.createRow(8);
+            celdaDatosPersonales = filaDatosPersonales.createCell(0);
+            celdaDatosPersonales.setCellStyle(headerStyle);
+            celdaDatosPersonales.setCellValue("FECHA FINAL");
+            celdaDatosPersonales =  filaDatosPersonales.createCell(1);
+            celdaDatosPersonales.setCellValue(hora_salida);
 
-            Row filaEncabezado = sheet.createRow(8);
+            Row filaEncabezado = sheet.createRow(10);
 
             for (int i = 0; i < contenidoTitulo.length; i++) {
                 Cell celdaEncabezado = filaEncabezado.createCell(i);
@@ -145,7 +155,9 @@ public class GenerarExcel {
             String query = "SELECT DATE_FORMAT(HORA_INGRESO_AM,\"%Y-%m-%d\") ,DATE_FORMAT(HORA_INGRESO_AM,\"%H:%i:%s\") , "
                     + "DATE_FORMAT(HORA_SALIDA_PM,\"%Y-%m-%d\"),DATE_FORMAT(HORA_SALIDA_PM,\"%H:%i:%s\"),HORAS_TRABAJADAS_PM ,"
                     + "COMENTARIOS_PM FROM HORA_INGRESO "
-                    + "INNER JOIN EMPLEADOS ON EMPLEADOS.ID = HORA_INGRESO.FK_EMPLEADO AND EMPLEADOS.DOCUMENTO = ?";
+                    + "INNER JOIN EMPLEADOS ON EMPLEADOS.ID = HORA_INGRESO.FK_EMPLEADO AND EMPLEADOS.DOCUMENTO = ?"
+                    + "AND HORA_INGRESO.HORA_INGRESO_AM >= CONCAT(\""+hora_entrada+"\",\"T00:00:00\")"
+                    + "AND HORA_INGRESO.HORA_SALIDA_PM <= CONCAT(\""+hora_salida+"\",\"T23:59:59\")";
             
             ArrayList<String> lista = new ArrayList<>();
             PreparedStatement PS;
@@ -153,7 +165,7 @@ public class GenerarExcel {
             PS.setString(1, documento);
             ResultSet RS = PS.executeQuery();
             int numCols = RS.getMetaData().getColumnCount();
-            int filaDatos = 9;
+            int filaDatos = 11;
             while (RS.next()) {
                 Row FilaDatos = sheet.createRow(filaDatos);
                 for (int a = 0; a < numCols; a++) {
@@ -205,9 +217,11 @@ public class GenerarExcel {
                 sheet.autoSizeColumn(x);
             }
 
-            FileOutputStream fileout = new FileOutputStream("archivo excel.xls");
-            book.write(fileout);
-            fileout.close();
+            String desktopPath = System.getProperty("user.home") + "/Desktop/";
+            desktopPath.replace("\\", "/");
+            try (FileOutputStream fileout = new FileOutputStream(new File(desktopPath+documento+".xls"))) {
+                book.write(fileout);
+            }
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error Excel", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {

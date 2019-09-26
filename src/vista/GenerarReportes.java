@@ -4,18 +4,16 @@
  * and open the template in the editor.
  */
 package vista;
+
+import control.GenerarExcel;
 import control.SQLEmpleados;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
-
-
-
 
 /**
  *
@@ -23,13 +21,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GenerarReportes extends javax.swing.JFrame {
 
-SQLEmpleados SQL = new SQLEmpleados(this);
-public JFrame parentFrame = new JFrame();
-public DefaultTableModel TABLAGENERARREPORTES;
-public JFileChooser saveFile = new JFileChooser();
-DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS PRESTADAS"+
-        " POR EMPLEADO INFORMACIÓN INDIVIDUAL\n";
+    SQLEmpleados SQL = new SQLEmpleados(this);
+    public JFrame parentFrame = new JFrame();
+    public DefaultTableModel TABLAGENERARREPORTES;
+    public JFileChooser saveFile = new JFileChooser();
+    DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+    private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS PRESTADAS"
+            + " POR EMPLEADO INFORMACIÓN INDIVIDUAL\n";
+
     /**
      * Creates new form GenerarReportes
      */
@@ -45,27 +44,28 @@ private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS 
         this.setLocationRelativeTo(null);
     }
 
-    private void obtenerDatos(){
-           if(!this.buscar.equals("")){
-            if(this.fechaInicial.getDate() == null || this.fechaInicial.getDate() == null){
-                JOptionPane.showMessageDialog(null,"¡Debe llenar todos los campos de Fecha!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
-            }else{    
-                if(SQL.validarEmpleadoParaReporte(this.tipo_documento.getSelectedItem().toString(),
-                this.buscar.getText(),DF.format(this.fechaInicial.getDate()),DF.format(this.fechaFinal.getDate())) != false){
+    private void obtenerDatos() {
+        if (!this.buscar.equals("")) {
+            if (this.fechaInicial.getDate() == null || this.fechaInicial.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "¡Debe llenar todos los campos de Fecha!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                if (SQL.validarEmpleadoParaReporte(this.tipo_documento.getSelectedItem().toString(),
+                        this.buscar.getText(), DF.format(this.fechaInicial.getDate()), DF.format(this.fechaFinal.getDate())) != false) {
                     String mensaje = "";
                     mensaje += SQL.ImprimirAsistencias(this.tipo_documento.getSelectedItem().toString(),
-                    this.buscar.getText(),DF.format(this.fechaInicial.getDate()),DF.format(this.fechaFinal.getDate()));
+                            this.buscar.getText(), DF.format(this.fechaInicial.getDate()), DF.format(this.fechaFinal.getDate()));
                     this.tablero.setText(mensaje);
                     this.BtndescargarPDF.setEnabled(true);
-                }else{
-                JOptionPane.showInternalMessageDialog(null,"¡No se encontro el empleado en la fecha establecida!","Mensaje",JOptionPane.WARNING_MESSAGE);  
-                this.tablero.setText("");
+                } else {
+                    JOptionPane.showInternalMessageDialog(null, "¡No se encontro el empleado en la fecha establecida!", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                    this.tablero.setText("");
                 }
             }
-        }else{
-            JOptionPane.showInternalMessageDialog(null,"Debe digitar el documento del empleado","Mensaje",JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "Debe digitar el documento del empleado", "Mensaje", JOptionPane.WARNING_MESSAGE);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,6 +88,7 @@ private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS 
         BtndescargarPDF = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablero = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +137,16 @@ private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS 
 
         PANELPRINCIPAL.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 1030, 250));
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Excel_2013_23480.png"))); // NOI18N
+        jButton1.setText("EXCEL");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        PANELPRINCIPAL.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 20, 110, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,24 +165,34 @@ private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS 
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-        this.obtenerDatos();       
+        this.obtenerDatos();
     }//GEN-LAST:event_buscarActionPerformed
 
     private void BtndescargarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtndescargarPDFActionPerformed
         // TODO add your handling code here:
         String desktopPath = System.getProperty("user.home") + "/Desktop/";
         desktopPath.replace("\\", "/");
-            SQL.ImprimirAsistenciasReportes(this.tipo_documento.getSelectedItem().toString(),
-            this.buscar.getText(),DF.format(this.fechaInicial.getDate()),DF.format(this.fechaFinal.getDate()),
-            desktopPath+this.buscar.getText()+".pdf");        
-       // GenerarPDF g = new GenerarPDF(SQL.tituloReporte+SQL.usuarioReporte,SQL.mensaje2,desktopPath+this.buscar.getText()+".pdf");
-       
+        SQL.ImprimirAsistenciasReportes(this.tipo_documento.getSelectedItem().toString(),
+                this.buscar.getText(), DF.format(this.fechaInicial.getDate()), DF.format(this.fechaFinal.getDate()),
+                desktopPath + this.buscar.getText() + ".pdf");
+        // GenerarPDF g = new GenerarPDF(SQL.tituloReporte+SQL.usuarioReporte,SQL.mensaje2,desktopPath+this.buscar.getText()+".pdf");
+
     }//GEN-LAST:event_BtndescargarPDFActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        GenerarExcel excel = new GenerarExcel();
+        try {
+            excel.crearExcel(buscar.getText(), DF.format(this.fechaInicial.getDate()), DF.format(this.fechaFinal.getDate()));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error", ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {     
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -197,8 +218,8 @@ private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS 
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {                
-                new GenerarReportes().setVisible(true);                
+            public void run() {
+                new GenerarReportes().setVisible(true);
             }
         });
     }
@@ -209,6 +230,7 @@ private String TITULO = "FORMATO DE REPORTE PARA IMPRESION DEL NÚMERO DE HORAS 
     private javax.swing.JTextField buscar;
     private com.toedter.calendar.JDateChooser fechaFinal;
     private com.toedter.calendar.JDateChooser fechaInicial;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
