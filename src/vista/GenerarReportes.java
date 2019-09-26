@@ -38,6 +38,7 @@ public class GenerarReportes extends javax.swing.JFrame {
         initComponents();
         this.tablero.setEditable(false);
         this.BtndescargarPDF.setEnabled(false);
+        this.BtndescargarExcel.setEnabled(false);
         SQL.obtenerTipoDocumentoParaReporte();
         this.setDefaultCloseOperation(GenerarReportes.HIDE_ON_CLOSE);
         this.setResizable(false);
@@ -56,6 +57,7 @@ public class GenerarReportes extends javax.swing.JFrame {
                             this.buscar.getText(), DF.format(this.fechaInicial.getDate()), DF.format(this.fechaFinal.getDate()));
                     this.tablero.setText(mensaje);
                     this.BtndescargarPDF.setEnabled(true);
+                    this.BtndescargarExcel.setEnabled(true);
                 } else {
                     JOptionPane.showInternalMessageDialog(null, "¡No se encontro el empleado en la fecha establecida!", "Mensaje", JOptionPane.WARNING_MESSAGE);
                     this.tablero.setText("");
@@ -88,7 +90,7 @@ public class GenerarReportes extends javax.swing.JFrame {
         BtndescargarPDF = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablero = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        BtndescargarExcel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,15 +139,15 @@ public class GenerarReportes extends javax.swing.JFrame {
 
         PANELPRINCIPAL.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 1030, 250));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Excel_2013_23480.png"))); // NOI18N
-        jButton1.setText("EXCEL");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtndescargarExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BtndescargarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Excel_2013_23480.png"))); // NOI18N
+        BtndescargarExcel.setText("EXCEL");
+        BtndescargarExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtndescargarExcelActionPerformed(evt);
             }
         });
-        PANELPRINCIPAL.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 20, 110, 40));
+        PANELPRINCIPAL.add(BtndescargarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 20, 110, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,7 +181,7 @@ public class GenerarReportes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BtndescargarPDFActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BtndescargarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtndescargarExcelActionPerformed
         // TODO add your handling code here:
         GenerarExcel excel = new GenerarExcel();
         try {
@@ -187,7 +189,7 @@ public class GenerarReportes extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error", ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BtndescargarExcelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,12 +227,12 @@ public class GenerarReportes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtndescargarExcel;
     private javax.swing.JButton BtndescargarPDF;
     private javax.swing.JPanel PANELPRINCIPAL;
     private javax.swing.JTextField buscar;
     private com.toedter.calendar.JDateChooser fechaFinal;
     private com.toedter.calendar.JDateChooser fechaInicial;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
