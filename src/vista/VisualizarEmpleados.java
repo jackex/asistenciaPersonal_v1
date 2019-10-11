@@ -7,6 +7,7 @@ package vista;
 
 import control.SQLEmpleados;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,17 +15,22 @@ import javax.swing.table.DefaultTableModel;
  * @author juliancc
  */
 public class VisualizarEmpleados extends javax.swing.JFrame {
-public DefaultTableModel TABLA;
-SQLEmpleados SQL = new SQLEmpleados(this);
+
+    public DefaultTableModel TABLA;
+    SQLEmpleados SQL = new SQLEmpleados(this);
+
     /**
      * Creates new form VisualizarEmpleados
      */
     public VisualizarEmpleados() {
-        TABLA = new DefaultTableModel(new Object[]{"DOCUMENTO","NOMBRE EMPLEADO","CARGO","DIRECCION","TELEFONO","CORREO"},0){    
-            @Override public boolean isCellEditable(int row, int col){
+        TABLA = new DefaultTableModel(new Object[]{"DOCUMENTO", "NOMBRE EMPLEADO", "CARGO", "DIRECCION", "TELEFONO", "CORREO"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
                 return false;
-            }            
+            }
         };
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.setDefaultCloseOperation(Index.HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -34,15 +40,15 @@ SQLEmpleados SQL = new SQLEmpleados(this);
         SQL.obtenerTotalEmpleados();
     }
 
-            public void borrarFilasTabla(){
-            while(this.TABLA.getRowCount()>0){
-                for(int j=0;j<this.TABLA.getRowCount();j++){
-                        this.TABLA.removeRow(j);
-                }
-            this.TABLAPRINCIPAL.repaint();
+    public void borrarFilasTabla() {
+        while (this.TABLA.getRowCount() > 0) {
+            for (int j = 0; j < this.TABLA.getRowCount(); j++) {
+                this.TABLA.removeRow(j);
             }
+            this.TABLAPRINCIPAL.repaint();
         }
-    
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,16 +66,21 @@ SQLEmpleados SQL = new SQLEmpleados(this);
         mostrarTodosEmpleados = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         TABLAPRINCIPAL = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         imagenPerfil = new javax.swing.JLabel();
         LblTotalEmpleados = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Busqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Busqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         tipoDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,14 +88,17 @@ SQLEmpleados SQL = new SQLEmpleados(this);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Tipo Documento");
 
+        documento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
         documento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 documentoActionPerformed(evt);
             }
         });
 
+        mostrarTodosEmpleados.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mostrarTodosEmpleados.setText("MostrarTodos los Empleados");
         mostrarTodosEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +119,7 @@ SQLEmpleados SQL = new SQLEmpleados(this);
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(documento, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                        .addComponent(documento, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(mostrarTodosEmpleados)))
                 .addContainerGap())
@@ -113,20 +127,22 @@ SQLEmpleados SQL = new SQLEmpleados(this);
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(documento, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mostrarTodosEmpleados))
-                .addGap(0, 45, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 830, 120));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 830, 120));
 
         TABLAPRINCIPAL.setModel(TABLA);
         TABLAPRINCIPAL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TABLAPRINCIPAL.setGridColor(new java.awt.Color(255, 255, 255));
+        TABLAPRINCIPAL.setSelectionBackground(new java.awt.Color(103, 128, 159));
         TABLAPRINCIPAL.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TABLAPRINCIPALMouseClicked(evt);
@@ -134,20 +150,55 @@ SQLEmpleados SQL = new SQLEmpleados(this);
         });
         jScrollPane1.setViewportView(TABLAPRINCIPAL);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 1020, 250));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TABLA DE EMPLEADOS");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 323, 32));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 1020, 250));
 
         imagenPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jPanel1.add(imagenPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 180, 150));
+        jPanel1.add(imagenPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 60, 180, 150));
 
-        LblTotalEmpleados.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jPanel1.add(LblTotalEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 163, 150, 20));
+        LblTotalEmpleados.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jPanel1.add(LblTotalEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 150, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 1060, 480));
+        jPanel3.setBackground(new java.awt.Color(103, 128, 159));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("TABLA DE EMPLEADOS");
+
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("X");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(354, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(325, 325, 325)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 50));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 1060, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -158,33 +209,38 @@ SQLEmpleados SQL = new SQLEmpleados(this);
 
     private void TABLAPRINCIPALMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TABLAPRINCIPALMouseClicked
         // TODO add your handling code here:
-        if(TABLA.getRowCount() > 0){
-            String documento = this.TABLA.getValueAt(this.TABLAPRINCIPAL.getSelectedRow(),0).toString();
+        if (TABLA.getRowCount() > 0) {
+            String documento = this.TABLA.getValueAt(this.TABLAPRINCIPAL.getSelectedRow(), 0).toString();
             SQL.obtenerFotoListaEmpleados(documento);
-        }else{
-        JOptionPane.showMessageDialog(null,"¡Debe seleccionar una fila de la tabla!","Mensaje",JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Debe seleccionar una fila de la tabla!", "Mensaje", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_TABLAPRINCIPALMouseClicked
 
     private void documentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_documentoActionPerformed
         // TODO add your handling code here:
-        if(!this.documento.equals("")){
+        if (!this.documento.equals("")) {
             this.borrarFilasTabla();
             SQL.obtenerUsuarioListaEmpleados(this.documento.getText(), tipoDocumento.getSelectedItem().toString());
-        }else{
-            JOptionPane.showMessageDialog(null,"¡Debe digitar un documento!","Mensaje",JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Debe digitar un documento!", "Mensaje", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_documentoActionPerformed
 
     private void mostrarTodosEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarTodosEmpleadosActionPerformed
         // TODO add your handling code here:
-        if(this.mostrarTodosEmpleados.isSelected()){
+        if (this.mostrarTodosEmpleados.isSelected()) {
             this.documento.setText("");
             this.borrarFilasTabla();
             SQL.obtenerListaEmpleados();
         }
     }//GEN-LAST:event_mostrarTodosEmpleadosActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -228,8 +284,10 @@ SQLEmpleados SQL = new SQLEmpleados(this);
     public javax.swing.JLabel imagenPerfil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox mostrarTodosEmpleados;
     public javax.swing.JComboBox<String> tipoDocumento;

@@ -12,24 +12,28 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import modelo.Empleados;
 
 /**
  *
  * @author jack
  */
-public class EditarEmpleados extends javax.swing.JFrame{
+public class EditarEmpleados extends javax.swing.JFrame {
 
     SQLEmpleados SQL = new SQLEmpleados(this);
     String documento_anterior;
     //HuellaDigitalEditarEmpleados HUELLA = new HuellaDigitalEditarEmpleados(this);
     public HuellaDigitalEditarEmpleados HUELLA2;
     public File ARCHIVOIMAGEN;
+
     /**
      * Creates new form EditarEmpleados
      */
     public EditarEmpleados() {
         super("Editar Empleados");
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.mensajeHuella.setEditable(false);
         this.BTNBUSCARIMAGEN.setEnabled(false);
@@ -42,16 +46,16 @@ public class EditarEmpleados extends javax.swing.JFrame{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
-    
-    public void cerrarVentana(){
+
+    public void cerrarVentana() {
         this.setDefaultCloseOperation(EditarEmpleados.HIDE_ON_CLOSE);
     }
-    
-    public void noCerrarVentana(){
+
+    public void noCerrarVentana() {
         this.setDefaultCloseOperation(EditarEmpleados.DO_NOTHING_ON_CLOSE);
     }
-    
-    private void limpiarCampos(){
+
+    private void limpiarCampos() {
         this.documento.setText("");
         this.primer_nombre.setText("");
         this.segundo_nombre.setText("");
@@ -66,8 +70,7 @@ public class EditarEmpleados extends javax.swing.JFrame{
         this.botonActualizarEmpleado.setEnabled(false);
         this.BTNBUSCARIMAGEN.setEnabled(false);
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,7 +81,7 @@ public class EditarEmpleados extends javax.swing.JFrame{
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         tipoDocumento = new javax.swing.JComboBox<>();
@@ -108,15 +111,17 @@ public class EditarEmpleados extends javax.swing.JFrame{
         jLabel12 = new javax.swing.JLabel();
         DEPARTAMENTOS = new javax.swing.JComboBox<>();
         MUNICIPIOS = new javax.swing.JComboBox<>();
-        jPanel3 = new javax.swing.JPanel();
-        LblfotoPerfil = new javax.swing.JLabel();
+        BTNBUSCARIMAGEN = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         LblMostrarHuella = new javax.swing.JLabel();
-        BTNBUSCARIMAGEN = new javax.swing.JButton();
-        botonActualizarEmpleado = new javax.swing.JButton();
+        DETECCIONHUELLA = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         mensajeHuella = new javax.swing.JTextArea();
-        DETECCIONHUELLA = new javax.swing.JButton();
+        botonActualizarEmpleado = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        LblfotoPerfil = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -130,213 +135,128 @@ public class EditarEmpleados extends javax.swing.JFrame{
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setFont(new java.awt.Font("DejaVu Serif", 1, 15)); // NOI18N
-        jLabel10.setText("Datos personales");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Editar Empleado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Empleado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel8.setText("Tipo Documento");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 39, -1, -1));
+
+        jPanel2.add(tipoDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 41, 230, -1));
 
         jLabel2.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel2.setText("Primer nombre");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 118, -1, -1));
+
+        primer_nombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(primer_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 118, 230, 28));
 
         jLabel1.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel1.setText("Primer apellido");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 199, -1, -1));
+
+        primer_apellido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(primer_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 204, 230, 27));
 
         jLabel5.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel5.setText("Telefono");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 319, -1, -1));
+
+        telefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 318, 230, 30));
 
         jLabel7.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel7.setText("Sexo");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 440, -1, -1));
+
+        jPanel2.add(sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 226, -1));
 
         jLabel17.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel17.setText("Contraseña");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 559, -1, -1));
+
+        contraseña.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 550, 226, 30));
 
         jLabel9.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel9.setText("Documento");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 72, 89, 28));
 
+        documento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         documento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 documentoActionPerformed(evt);
             }
         });
+        jPanel2.add(documento, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 72, 230, 28));
 
         jLabel3.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel3.setText("Segundo nombre");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 156, -1, -1));
+
+        segundo_nombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(segundo_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 159, 230, 30));
 
         jLabel4.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel4.setText("Segundo apellido");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 237, -1, -1));
+
+        segundo_apellido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(segundo_apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 242, 230, 27));
 
         jLabel6.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel6.setText("Dirección");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 275, 82, -1));
+
+        direccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 280, 230, 27));
 
         jLabel16.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel16.setText("Correo");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 363, 82, 32));
+
+        correo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 363, 230, 28));
 
         jLabel18.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel18.setText("Cargo");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 401, -1, -1));
+
+        jPanel2.add(cargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 226, -1));
 
         jLabel11.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel11.setText("Departamento");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 479, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 15)); // NOI18N
         jLabel12.setText("Municipio");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 518, -1, -1));
 
         DEPARTAMENTOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DEPARTAMENTOSActionPerformed(evt);
             }
         });
+        jPanel2.add(DEPARTAMENTOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 226, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tipoDocumento, 0, 223, Short.MAX_VALUE)
-                            .addComponent(documento)
-                            .addComponent(primer_nombre))
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(segundo_nombre)
-                                    .addComponent(primer_apellido)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(17, 17, 17)
-                                .addComponent(segundo_apellido))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addGap(139, 139, 139)
-                                        .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(correo)
-                                    .addComponent(cargo, 0, 225, Short.MAX_VALUE)
-                                    .addComponent(direccion)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(sexo, 0, 226, Short.MAX_VALUE)
-                                    .addComponent(DEPARTAMENTOS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(MUNICIPIOS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(24, 24, 24))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(primer_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(segundo_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(primer_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(segundo_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(correo))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
-                    .addComponent(cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(DEPARTAMENTOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(MUNICIPIOS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
+        jPanel2.add(MUNICIPIOS, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 520, 226, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 400, 600));
+        BTNBUSCARIMAGEN.setBackground(new java.awt.Color(255, 255, 255));
+        BTNBUSCARIMAGEN.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        BTNBUSCARIMAGEN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/explorer_folders_32px.png"))); // NOI18N
+        BTNBUSCARIMAGEN.setText("Examinar");
+        BTNBUSCARIMAGEN.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BTNBUSCARIMAGEN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBUSCARIMAGENActionPerformed(evt);
+            }
+        });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Foto Empleado", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
-
-        LblfotoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LblfotoPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/update_user.png"))); // NOI18N
-        LblfotoPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LblfotoPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LblfotoPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 270, 290));
-
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Huella Digital", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -353,19 +273,21 @@ public class EditarEmpleados extends javax.swing.JFrame{
             .addComponent(LblMostrarHuella, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 270, 220));
-
-        BTNBUSCARIMAGEN.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        BTNBUSCARIMAGEN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/explorer_folders_32px.png"))); // NOI18N
-        BTNBUSCARIMAGEN.setText("Examinar");
-        BTNBUSCARIMAGEN.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        BTNBUSCARIMAGEN.addActionListener(new java.awt.event.ActionListener() {
+        DETECCIONHUELLA.setBackground(new java.awt.Color(255, 255, 255));
+        DETECCIONHUELLA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DETECCIONHUELLA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fingerprint_32PX.png"))); // NOI18N
+        DETECCIONHUELLA.setText("Iniciar Detección de Huella");
+        DETECCIONHUELLA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTNBUSCARIMAGENActionPerformed(evt);
+                DETECCIONHUELLAActionPerformed(evt);
             }
         });
-        jPanel1.add(BTNBUSCARIMAGEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 270, 40));
 
+        mensajeHuella.setColumns(20);
+        mensajeHuella.setRows(5);
+        jScrollPane1.setViewportView(mensajeHuella);
+
+        botonActualizarEmpleado.setBackground(new java.awt.Color(255, 255, 255));
         botonActualizarEmpleado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonActualizarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save32px.png"))); // NOI18N
         botonActualizarEmpleado.setText("Actualizar");
@@ -375,35 +297,108 @@ public class EditarEmpleados extends javax.swing.JFrame{
                 botonActualizarEmpleadoActionPerformed(evt);
             }
         });
-        jPanel1.add(botonActualizarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 730, 188, 50));
 
-        mensajeHuella.setColumns(20);
-        mensajeHuella.setRows(5);
-        jScrollPane1.setViewportView(mensajeHuella);
+        jPanel6.setBackground(new java.awt.Color(246, 71, 71));
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 650, 680, 70));
+        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("EDITAR DATOS EMPLEADO");
 
-        DETECCIONHUELLA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        DETECCIONHUELLA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fingerprint_32PX.png"))); // NOI18N
-        DETECCIONHUELLA.setText("Iniciar Detección de Huella");
-        DETECCIONHUELLA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DETECCIONHUELLAActionPerformed(evt);
+        jLabel13.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("X");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
             }
         });
-        jPanel1.add(DETECCIONHUELLA, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 580, 270, 50));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(228, 228, 228)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        LblfotoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LblfotoPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/update_user.png"))); // NOI18N
+        LblfotoPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(DETECCIONHUELLA, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                                            .addComponent(BTNBUSCARIMAGEN, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(LblfotoPerfil))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(251, 251, 251)
+                        .addComponent(botonActualizarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(LblfotoPerfil)
+                        .addGap(8, 8, 8)
+                        .addComponent(BTNBUSCARIMAGEN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(DETECCIONHUELLA, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 22, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonActualizarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 830));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -411,12 +406,12 @@ public class EditarEmpleados extends javax.swing.JFrame{
 
     private void botonActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarEmpleadoActionPerformed
         // TODO add your handling code here:
-        if(!this.documento.getText().equals("") && !this.primer_nombre.getText().equals("") && !this.segundo_nombre.getText().equals("")
-            && !this.primer_apellido.getText().equals("") && !this.segundo_apellido.getText().equals("") &&
-            !this.telefono.getText().equals("") && !this.direccion.getText().equals("") &&
-            !this.contraseña.getText().equals("")){            
-                if(SQL.validarEmpleado(this.documento.getText())){
-                    if(this.ARCHIVOIMAGEN != null){
+        if (!this.documento.getText().equals("") && !this.primer_nombre.getText().equals("") && !this.segundo_nombre.getText().equals("")
+                && !this.primer_apellido.getText().equals("") && !this.segundo_apellido.getText().equals("")
+                && !this.telefono.getText().equals("") && !this.direccion.getText().equals("")
+                && !this.contraseña.getText().equals("")) {
+            if (SQL.validarEmpleado(this.documento.getText())) {
+                if (this.ARCHIVOIMAGEN != null) {
                     Empleados empleado = new Empleados();
                     empleado.setTIPO_DOCUMENTO(this.tipoDocumento.getSelectedItem().toString());
                     empleado.setDOCUMENTO(this.documento.getText());
@@ -431,13 +426,13 @@ public class EditarEmpleados extends javax.swing.JFrame{
                     empleado.setSEXO(this.sexo.getSelectedItem().toString());
                     empleado.setCARGO(this.cargo.getSelectedItem().toString());
                     SQL.ActualizarEmpleados(empleado.getSEXO(), empleado.getTIPO_DOCUMENTO(),
-                        empleado.getDOCUMENTO(),empleado.getPRIMER_NOMBRE(),empleado.getSEGUNDO_NOMBRE(),
-                        empleado.getPRIMER_APELLIDO(),empleado.getSEGUNDO_APELLIDO(), empleado.getTELEFONO()
-                        ,empleado.getDIRECCION(),empleado.getCORREO(),empleado.getCONTRASENA(),empleado.getCARGO(),
-                        this.documento_anterior,this.HUELLA2,this.ARCHIVOIMAGEN);
-                    JOptionPane.showMessageDialog(null,"Datos actualizados correctamente!");
+                            empleado.getDOCUMENTO(), empleado.getPRIMER_NOMBRE(), empleado.getSEGUNDO_NOMBRE(),
+                            empleado.getPRIMER_APELLIDO(), empleado.getSEGUNDO_APELLIDO(), empleado.getTELEFONO(),
+                             empleado.getDIRECCION(), empleado.getCORREO(), empleado.getCONTRASENA(), empleado.getCARGO(),
+                            this.documento_anterior, this.HUELLA2, this.ARCHIVOIMAGEN);
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente!");
                     this.limpiarCampos();
-                }else{                        
+                } else {
                     Empleados empleado = new Empleados();
                     empleado.setTIPO_DOCUMENTO(this.tipoDocumento.getSelectedItem().toString());
                     empleado.setDOCUMENTO(this.documento.getText());
@@ -452,26 +447,26 @@ public class EditarEmpleados extends javax.swing.JFrame{
                     empleado.setSEXO(this.sexo.getSelectedItem().toString());
                     empleado.setCARGO(this.cargo.getSelectedItem().toString());
                     SQL.ActualizarEmpleadosSinImagen(empleado.getSEXO(), empleado.getTIPO_DOCUMENTO(),
-                        empleado.getDOCUMENTO(),empleado.getPRIMER_NOMBRE(),empleado.getSEGUNDO_NOMBRE(),
-                        empleado.getPRIMER_APELLIDO(),empleado.getSEGUNDO_APELLIDO(), empleado.getTELEFONO()
-                        ,empleado.getDIRECCION(),empleado.getCORREO(),empleado.getCONTRASENA(),empleado.getCARGO(),
-                        this.documento_anterior,this.HUELLA2);
-                    JOptionPane.showMessageDialog(null,"Datos actualizados correctamente!");
+                            empleado.getDOCUMENTO(), empleado.getPRIMER_NOMBRE(), empleado.getSEGUNDO_NOMBRE(),
+                            empleado.getPRIMER_APELLIDO(), empleado.getSEGUNDO_APELLIDO(), empleado.getTELEFONO(),
+                             empleado.getDIRECCION(), empleado.getCORREO(), empleado.getCONTRASENA(), empleado.getCARGO(),
+                            this.documento_anterior, this.HUELLA2);
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente!");
                     this.limpiarCampos();
-                 }
-                }else{
-                    JOptionPane.showMessageDialog(null,"No existe un empleado con este documento");
                 }
-        }else{
-            JOptionPane.showMessageDialog(null,"Debe digitar el documento del empleado");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un empleado con este documento");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe digitar el documento del empleado");
         }
     }//GEN-LAST:event_botonActualizarEmpleadoActionPerformed
 
     private void documentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_documentoActionPerformed
         // TODO add your handling code here:
-        if(!this.documento.getText().equals("")){
-            if(SQL.validarEmpleado(documento.getText())){
-                String array [] = new String [11];
+        if (!this.documento.getText().equals("")) {
+            if (SQL.validarEmpleado(documento.getText())) {
+                String array[] = new String[11];
                 array = SQL.obtenerDatosUsuarioEditar(this.documento.getText());
                 this.documento_anterior = array[1];
                 this.primer_nombre.setText(array[2]);
@@ -480,14 +475,14 @@ public class EditarEmpleados extends javax.swing.JFrame{
                 this.segundo_apellido.setText(array[5]);
                 this.direccion.setText(array[6]);
                 this.telefono.setText(array[7]);
-                this.correo.setText(array[8]); 
+                this.correo.setText(array[8]);
                 this.contraseña.setText(array[11]);
                 SQL.obtenerFotoEditarPerfil(documento.getText());
-            }else{
-                JOptionPane.showMessageDialog(null,"No existe un empleado con este documento");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un empleado con este documento");
             }
         }
-        
+
     }//GEN-LAST:event_documentoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -507,46 +502,51 @@ public class EditarEmpleados extends javax.swing.JFrame{
         JFileChooser archivo = new JFileChooser();
         archivo.setDialogTitle("Seleccionar imagen");
         archivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if(archivo.showOpenDialog(this)== JFileChooser.APPROVE_OPTION){            
-              File file  = archivo.getSelectedFile();
-            if(file.getName().endsWith("jpeg") || file.getName().endsWith("jpg") || file.getName().endsWith("png")){
-              this.ARCHIVOIMAGEN = file;
-              ImageIcon imagen = new ImageIcon(file.getPath());
-              System.out.println(file.getPath());
-              this.LblfotoPerfil.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.LblfotoPerfil.getWidth(),
-              this.LblfotoPerfil.getHeight(),Image.SCALE_DEFAULT)));
-            }else{
-                JOptionPane.showMessageDialog(null,"El archivo debe ser una imagen", "Mensaje", JOptionPane.WARNING_MESSAGE);
+        if (archivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = archivo.getSelectedFile();
+            if (file.getName().endsWith("jpeg") || file.getName().endsWith("jpg") || file.getName().endsWith("png")) {
+                this.ARCHIVOIMAGEN = file;
+                ImageIcon imagen = new ImageIcon(file.getPath());
+                System.out.println(file.getPath());
+                this.LblfotoPerfil.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.LblfotoPerfil.getWidth(),
+                        this.LblfotoPerfil.getHeight(), Image.SCALE_DEFAULT)));
+            } else {
+                JOptionPane.showMessageDialog(null, "El archivo debe ser una imagen", "Mensaje", JOptionPane.WARNING_MESSAGE);
             }
         }
-        
+
     }//GEN-LAST:event_BTNBUSCARIMAGENActionPerformed
 
     private void DETECCIONHUELLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DETECCIONHUELLAActionPerformed
         // TODO add your handling code here:
         int respuesta;
-        respuesta = JOptionPane.showOptionDialog(null,"¿Esta seguro que desea continuar?","Mensaje", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null);
-        if(respuesta == JOptionPane.YES_NO_OPTION){
-        if(!this.documento.getText().equals("")){
-            this.DETECCIONHUELLA.setEnabled(false);
-            this.noCerrarVentana();
-            HuellaDigitalEditarEmpleados HUELLA = new HuellaDigitalEditarEmpleados(this);
-            HUELLA.documento = this.documento.getText();
-            HUELLA.Iniciar();
-            HUELLA.start();
-            HUELLA.estadoHuellas();
-            this.DETECCIONHUELLA.setEnabled(false);
-        }else{
-             JOptionPane.showMessageDialog(null,"Debe digitar el documento del empleado","Mensaje",JOptionPane.ERROR_MESSAGE);
-        }
+        respuesta = JOptionPane.showOptionDialog(null, "¿Esta seguro que desea continuar?", "Mensaje", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (respuesta == JOptionPane.YES_NO_OPTION) {
+            if (!this.documento.getText().equals("")) {
+                this.DETECCIONHUELLA.setEnabled(false);
+                this.noCerrarVentana();
+                HuellaDigitalEditarEmpleados HUELLA = new HuellaDigitalEditarEmpleados(this);
+                HUELLA.documento = this.documento.getText();
+                HUELLA.Iniciar();
+                HUELLA.start();
+                HUELLA.estadoHuellas();
+                this.DETECCIONHUELLA.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe digitar el documento del empleado", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_DETECCIONHUELLAActionPerformed
 
     private void DEPARTAMENTOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPARTAMENTOSActionPerformed
         // TODO add your handling code here:
         this.MUNICIPIOS.removeAllItems();
-       SQL.obtenerMunicipiosEditarEmpleados(this.DEPARTAMENTOS.getSelectedItem().toString());
+        SQL.obtenerMunicipiosEditarEmpleados(this.DEPARTAMENTOS.getSelectedItem().toString());
     }//GEN-LAST:event_DEPARTAMENTOSActionPerformed
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments
@@ -600,6 +600,7 @@ public class EditarEmpleados extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -613,8 +614,9 @@ public class EditarEmpleados extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextArea mensajeHuella;
     private javax.swing.JTextField primer_apellido;

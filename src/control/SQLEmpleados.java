@@ -696,8 +696,12 @@ public void obtenerTodasLasAsistencias(String tipo_documento, String documento, 
                 PS.setString(2, tipo_documento);
                 RS = PS.executeQuery();
                 while(RS.next()){
+                    if(RS.getString("HORA_SALIDA_PM") == null){
+                        mensaje += "\t" + RS.getString("HORA_INGRESO_AM")+"\n";
+                    }else{
                     mensaje += "\t" + RS.getString("HORA_INGRESO_AM") + "\t  " +RS.getString( "HORA_SALIDA_PM") + "\t                 " 
                             +RS.getString( "HORAS")+"\t\t"+RS.getString( "COMENTARIOS_PM")+"\n";
+                    }
                 }
                 RS.close();
                 PS.close();
@@ -793,6 +797,7 @@ public void obtenerTodasLasAsistencias(String tipo_documento, String documento, 
     
 public void ImprimirAsistenciasReportes(String tipo_documento, String documento, String fechaInicial, String fechaFinal,String path){        
            // this.tituloReporte = temp;   
+           String data = "";
            boolean flag = true;
            boolean flagEmpleado = true;
             try{
@@ -827,10 +832,15 @@ public void ImprimirAsistenciasReportes(String tipo_documento, String documento,
                        PDF.agregarDatos(PDF.tabla, mensaje2, PDF.helveticaBold, true);
                        flag = false;
                     }
-                    String data = RS.getString("HORA_INGRESO_AM")+ ";" 
+                    if(RS.getString( "HORA_SALIDA_PM") == null){
+                            data = RS.getString("HORA_INGRESO_AM")+ ";" 
+                            + " "+ ";"+ " "+";"+ " ";
+                    }else{
+                        data = RS.getString("HORA_INGRESO_AM")+ ";" 
                             + RS.getString( "HORA_SALIDA_PM")+ ";" 
                             + RS.getString( "HORAS")+";"
                             + RS.getString("COMENTARIOS_PM");
+                    }
                     PDF.agregarDatos(PDF.tabla, data, PDF.helvetica, false);
                 }
                 PDF.doc.add(PDF.TablaDatosEmpleado);
@@ -843,32 +853,6 @@ public void ImprimirAsistenciasReportes(String tipo_documento, String documento,
             }        
             //return this.tituloReporte + this.usuarioReporte + this.mensaje;
 }
-
-//public void ImprimirAsistenciasReportes(String tipo_documento, String documento, String fechaInicial, String fechaFinal){        
-//           // this.tituloReporte = temp;   
-//           mensaje2="";
-//            try{
-//               PreparedStatement PS;
-//               ResultSet RS;
-//                String query = "SELECT empleados.PRIMER_NOMBRE, empleados.SEGUNDO_NOMBRE, empleados.PRIMER_APELLIDO,empleados.SEGUNDO_APELLIDO, HORA_INGRESO_AM, HORA_SALIDA_AM,HORAS_TRABAJADAS_AM,HORA_INGRESO_PM,HORA_SALIDA_PM,HORAS_TRABAJADAS_PM, ADDTIME(HORAS_TRABAJADAS_AM,HORAS_TRABAJADAS_PM) as \"HORAS\", COMENTARIOS_AM, COMENTARIOS_PM from hora_ingreso,empleados,tipo_documento where  empleados.id = hora_ingreso.FK_EMPLEADO and tipo_documento.ID = empleados.FK_TIPO_DOCUMENTO and empleados.DOCUMENTO = ? and tipo_documento.DOCUMENTO = ? AND hora_ingreso.HORA_INGRESO_AM >= concat(\""+fechaInicial+"\",\"T00:00:00\") and hora_ingreso.HORA_INGRESO_AM <= concat(\""+fechaFinal+"\",\"T23:59:59\")";
-//                mensaje2 += "       HORA DE INGRESO AM      HORA DE SALIDA AM    HORAS TRABAJADAS AM   HORA DE INGRESO PM     HORA DE SALIDA PM   HORAS TRABAJADAS PM  TOTAL\tCOMENTARIOS_AM\t\tCOMENTARIOS_PM\n";
-//                PS = conexion.getConnection().prepareStatement(query);
-//                PS.setString(1, documento);
-//                PS.setString(2, tipo_documento);
-//                RS = PS.executeQuery();
-//                while(RS.next()){
-//                    mensaje2 += "        "+RS.getString("HORA_INGRESO_AM") + "  " + RS.getString("HORA_SALIDA_AM")+ "     " 
-//                    + RS.getString( "HORAS_TRABAJADAS_AM")+ "        " + RS.getString( "HORA_INGRESO_PM")+ 
-//                    "  " +RS.getString( "HORA_SALIDA_PM") + "      " +RS.getString( "HORAS_TRABAJADAS_PM")
-//                            + "     " +RS.getString( "HORAS")+"\t\t"+ RS.getString("COMENTARIOS_AM") +"\t\t\t"+ RS.getString("COMENTARIOS_PM")+"\n\n";
-//                }
-//                RS.close();
-//                PS.close();
-//            }catch(SQLException ex){
-//                JOptionPane.showMessageDialog(null,ex.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
-//            }        
-//            //return this.tituloReporte + this.usuarioReporte + this.mensaje;
-//}
 
 public void ImprimirAsistenciasReportesPorSistemaAM(String tipo_documento, String documento, String fechaInicial, String fechaFinal,String path){        
            // this.tituloReporte = temp; 
@@ -1385,7 +1369,8 @@ public void ImprimirAsistenciasReportesPorSistemaPM(String tipo_documento, Strin
     
     
     public void asignarSalidaDeUsuariosPMSistema(){
-        String query = "SELECT EMPLEADOS.ID, EMPLEADOS.DOCUMENTO FROM EMPLEADOS,HORA_INGRESO WHERE HORA_INGRESO.FK_EMPLEADO = EMPLEADOS.ID AND HORA_INGRESO.HORA_INGRESO_AM >= CONCAT(date(HORA_INGRESO_AM),\"T00:00:00\") AND HORA_INGRESO.HORA_INGRESO_AM <= CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\") AND HORA_SALIDA_PM IS NULL";
+        //String query = "SELECT HORA_INGRESO.ID, EMPLEADOS.DOCUMENTO FROM EMPLEADOS,HORA_INGRESO WHERE HORA_INGRESO.FK_EMPLEADO = EMPLEADOS.ID AND HORA_INGRESO.HORA_INGRESO_AM >= CONCAT(date(HORA_INGRESO_AM),\"T00:00:00\") AND HORA_INGRESO.HORA_INGRESO_AM <= CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\") AND HORA_SALIDA_PM IS NULL";
+        String query = "SELECT HORA_INGRESO.ID, EMPLEADOS.DOCUMENTO FROM EMPLEADOS,HORA_INGRESO WHERE HORA_INGRESO.FK_EMPLEADO = EMPLEADOS.ID AND HORA_INGRESO.HORA_INGRESO_AM < CONCAT(date(CURRENT_DATE),\"T00:00:00\") AND REGISTRO_INGRESO_PM IS NULL AND HORA_SALIDA_PM IS NULL";
         try{
             int x = 0;
             ArrayList<String> arrayID = new ArrayList<String>();
@@ -1394,7 +1379,7 @@ public void ImprimirAsistenciasReportesPorSistemaPM(String tipo_documento, Strin
             PS = conexion.getConnection().prepareStatement(query);
             ResultSet RS = PS.executeQuery();
             while(RS.next()){
-                arrayID.add(x,RS.getString("EMPLEADOS.ID"));
+                arrayID.add(x,RS.getString("HORA_INGRESO.ID"));
                 arrayDocumento.add(x,RS.getString("EMPLEADOS.DOCUMENTO"));
                 x+= 1;
             }            
@@ -1407,12 +1392,12 @@ public void ImprimirAsistenciasReportesPorSistemaPM(String tipo_documento, Strin
     }
     
     public void ejecutarSalidaDeUsuariosPMSistema(ArrayList<String> arrayID,ArrayList<String> arrayDocumento){        
-        Date fecha = new Date();
-        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+//        Date fecha = new Date();
+//        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         try {
             for(int x = 0; x < arrayID.size(); x++){
                 PreparedStatement PS;                
-                String query = "UPDATE HORA_INGRESO,EMPLEADOS SET HORA_SALIDA_PM = CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\"), HORAS_TRABAJADAS_PM = TIMEDIFF(CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\"),HORA_INGRESO_AM), REGISTRO_INGRESO_PM =?, COMENTARIOS_PM =? WHERE HORA_INGRESO.FK_EMPLEADO = EMPLEADOS.ID AND HORA_INGRESO.FK_EMPLEADO =? AND EMPLEADOS.DOCUMENTO =? AND HORA_INGRESO.HORA_INGRESO_AM >= CONCAT(date(HORA_INGRESO_AM),\"T00:00:00\") AND HORA_INGRESO.HORA_INGRESO_AM <= CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\")";
+                String query = "UPDATE HORA_INGRESO,EMPLEADOS SET HORA_SALIDA_PM = CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\"), HORAS_TRABAJADAS_PM = TIMEDIFF(CONCAT(date(HORA_INGRESO_AM),\"T23:59:59\"),HORA_INGRESO_AM), REGISTRO_INGRESO_PM =?, COMENTARIOS_PM =? WHERE HORA_INGRESO.FK_EMPLEADO = EMPLEADOS.ID AND HORA_INGRESO.ID =? AND EMPLEADOS.DOCUMENTO =? AND REGISTRO_INGRESO_PM IS NULL AND HORA_SALIDA_PM IS NULL";
                 PS = conexion.getConnection().prepareStatement(query);
                 //PS.setString(1, formato.format(fecha)+"T18:00:00");
                 PS.setInt(1,1);
@@ -1629,9 +1614,9 @@ public void ImprimirAsistenciasReportesPorSistemaPM(String tipo_documento, Strin
     
     public boolean RegistrarHoraSalidaPM(int id, String hora_salida_pm){
         boolean flag = false;
-        Date fecha = new Date();
-        //DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        //formato.format(fecha);
+//        Date fecha = new Date();
+//        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+//        formato.format(fecha);
         String query = "UPDATE HORA_INGRESO SET HORA_SALIDA_PM = \""+hora_salida_pm+"\", HORAS_TRABAJADAS_PM = TIMEDIFF(\""+hora_salida_pm+"\",HORA_INGRESO.HORA_INGRESO_AM), REGISTRO_INGRESO_PM =?, COMENTARIOS_PM =?  WHERE HORA_INGRESO.HORA_INGRESO_AM >= CONCAT(CURRENT_DATE,\"T00:00:00\") AND HORA_INGRESO.HORA_INGRESO_AM <= CONCAT(CURRENT_DATE,\"T23:59:59\") AND HORA_INGRESO.FK_EMPLEADO = ?";
         PreparedStatement PS;
         try{
@@ -1652,9 +1637,9 @@ public void ImprimirAsistenciasReportesPorSistemaPM(String tipo_documento, Strin
     
     public boolean RegistrarHoraSalidaPMSistema(int id, String hora_salida_pm){
         boolean flag = false;
-        Date fecha = new Date();
-        //DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        //formato.format(fecha);
+//        Date fecha = new Date();
+//        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+//        formato.format(fecha);
         String query = "UPDATE HORA_INGRESO SET HORA_SALIDA_PM = \""+hora_salida_pm+"\", HORAS_TRABAJADAS_PM = TIMEDIFF(\""+hora_salida_pm+"\",HORA_INGRESO.HORA_INGRESO_PM), REGISTRO_INGRESO_PM =?  WHERE HORA_INGRESO.HORA_INGRESO_PM >= CONCAT(CURRENT_DATE,\"T00:00:00\") AND HORA_INGRESO.HORA_INGRESO_PM <= CONCAT(CURRENT_DATE,\"T23:59:59\") AND HORA_INGRESO.FK_EMPLEADO = ?";
         PreparedStatement PS;
         try{
@@ -1972,6 +1957,5 @@ public void ImprimirAsistenciasReportesPorSistemaPM(String tipo_documento, Strin
           JOptionPane.showMessageDialog(null,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
       }
       return 0;
-  }
-   
+  }   
 }

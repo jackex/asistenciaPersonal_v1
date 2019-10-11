@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,6 +36,8 @@ public class GenerarReportes extends javax.swing.JFrame {
     public GenerarReportes() {
         //TABLAGENERARREPORTES = new DefaultTableModel(new Object[]{"Documento","Nombre","Horas Mensuales","Horas Semanales","Horas diarias"},0);
         super("Generar Reportes");
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.tablero.setEditable(false);
         this.BtndescargarPDF.setEnabled(false);
@@ -81,7 +84,6 @@ public class GenerarReportes extends javax.swing.JFrame {
         tipo_documento = new javax.swing.JComboBox<>();
         buscar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         fechaInicial = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -91,38 +93,49 @@ public class GenerarReportes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablero = new javax.swing.JTextArea();
         BtndescargarExcel = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        PANELPRINCIPAL.setBackground(new java.awt.Color(255, 255, 255));
+        PANELPRINCIPAL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PANELPRINCIPAL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        PANELPRINCIPAL.add(tipo_documento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 174, -1));
+        PANELPRINCIPAL.add(tipo_documento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 174, 30));
 
+        buscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
         buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarActionPerformed(evt);
             }
         });
-        PANELPRINCIPAL.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 159, -1));
+        PANELPRINCIPAL.add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 170, 30));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Tipo documento      ");
-        PANELPRINCIPAL.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 100, -1));
+        PANELPRINCIPAL.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 120, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("TABLA DE REPORTES DE HORARIOS");
-        PANELPRINCIPAL.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 260, -1));
-        PANELPRINCIPAL.add(fechaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 160, -1));
+        fechaInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
+        PANELPRINCIPAL.add(fechaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, 160, 30));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Fecha inicial");
-        PANELPRINCIPAL.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, 84, -1));
+        PANELPRINCIPAL.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 90, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Fecha final");
-        PANELPRINCIPAL.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 100, -1));
-        PANELPRINCIPAL.add(fechaFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 170, -1));
+        PANELPRINCIPAL.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 360, 110, -1));
 
+        fechaFinal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
+        PANELPRINCIPAL.add(fechaFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 380, 170, 30));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Documento");
-        PANELPRINCIPAL.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 105, -1));
+        PANELPRINCIPAL.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 110, -1));
 
+        BtndescargarPDF.setBackground(new java.awt.Color(255, 255, 255));
         BtndescargarPDF.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         BtndescargarPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf32px.png"))); // NOI18N
         BtndescargarPDF.setText(" PDF");
@@ -131,14 +144,15 @@ public class GenerarReportes extends javax.swing.JFrame {
                 BtndescargarPDFActionPerformed(evt);
             }
         });
-        PANELPRINCIPAL.add(BtndescargarPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 20, 110, -1));
+        PANELPRINCIPAL.add(BtndescargarPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 50, 110, 40));
 
         tablero.setColumns(20);
         tablero.setRows(5);
         jScrollPane1.setViewportView(tablero);
 
-        PANELPRINCIPAL.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 1030, 250));
+        PANELPRINCIPAL.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 1030, 250));
 
+        BtndescargarExcel.setBackground(new java.awt.Color(255, 255, 255));
         BtndescargarExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         BtndescargarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Excel_2013_23480.png"))); // NOI18N
         BtndescargarExcel.setText("EXCEL");
@@ -147,7 +161,44 @@ public class GenerarReportes extends javax.swing.JFrame {
                 BtndescargarExcelActionPerformed(evt);
             }
         });
-        PANELPRINCIPAL.add(BtndescargarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 20, 110, 40));
+        PANELPRINCIPAL.add(BtndescargarExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, 110, 40));
+
+        jPanel1.setBackground(new java.awt.Color(255, 203, 5));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("TABLA DE REPORTES DE HORARIOS");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("X");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(340, 340, 340)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 339, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        PANELPRINCIPAL.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,7 +210,7 @@ public class GenerarReportes extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PANELPRINCIPAL, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PANELPRINCIPAL, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -167,7 +218,19 @@ public class GenerarReportes extends javax.swing.JFrame {
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-        this.obtenerDatos();
+        if (this.buscar.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "¡Debe digitar el documento!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (this.fechaInicial.getDate() == null || this.fechaFinal.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "¡Debe establecer el rango de fechas requeridas!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                if (this.fechaInicial.getDate().after(this.fechaFinal.getDate())) {
+                    JOptionPane.showMessageDialog(null, "¡La fecha inicial debe ser menor a la fecha final!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    this.obtenerDatos();
+                }
+            }
+        }
     }//GEN-LAST:event_buscarActionPerformed
 
     private void BtndescargarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtndescargarPDFActionPerformed
@@ -190,6 +253,11 @@ public class GenerarReportes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error", ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtndescargarExcelActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -238,6 +306,8 @@ public class GenerarReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextArea tablero;
     public javax.swing.JComboBox<String> tipo_documento;

@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package vista;
+
 import control.SQLContratos;
 import modelo.Contratos;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,49 +20,50 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CrearContratos extends javax.swing.JFrame {
 
-private String temp_nombre_contrato = "";
-private SQLContratos SQL = new SQLContratos(this);
-public DefaultTableModel TABLACREARCONTRATOS;
-DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-Contratos contrato = new Contratos();
+    private String temp_nombre_contrato = "";
+    private SQLContratos SQL = new SQLContratos(this);
+    public DefaultTableModel TABLACREARCONTRATOS;
+    DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+    Contratos contrato = new Contratos();
+
     /**
      * Creates new form CrearContratos
      */
 
-     private void editarCampos(Boolean datum){
-       this.nombrecontrato.setEditable(datum);
-       this.fecha_inicio.setEnabled(datum);
-       this.fecha_finalizacion.setEnabled(datum);
-       this.descripcion.setEditable(datum);
-    }
-     
-         public void borrarFilasTabla(){
-            while(this.TABLACREARCONTRATOS.getRowCount()>0){
-                for(int j=0;j<this.TABLACREARCONTRATOS.getRowCount();j++){
-                        this.TABLACREARCONTRATOS.removeRow(j);
-                }
-            this.tablaContratos.repaint();
-            }
-        }
-     
-     
-    private void borrarCeldas(){
-       this.nombrecontrato.setText("");
-       this.fecha_inicio.cleanup();
-       this.fecha_finalizacion.cleanup();
-       this.descripcion.setText("");
+    private void editarCampos(Boolean datum) {
+        this.nombrecontrato.setEditable(datum);
+        this.fecha_inicio.setEnabled(datum);
+        this.fecha_finalizacion.setEnabled(datum);
+        this.descripcion.setEditable(datum);
     }
 
+    public void borrarFilasTabla() {
+        while (this.TABLACREARCONTRATOS.getRowCount() > 0) {
+            for (int j = 0; j < this.TABLACREARCONTRATOS.getRowCount(); j++) {
+                this.TABLACREARCONTRATOS.removeRow(j);
+            }
+            this.tablaContratos.repaint();
+        }
+    }
+
+    private void borrarCeldas() {
+        this.nombrecontrato.setText("");
+        this.fecha_inicio.cleanup();
+        this.fecha_finalizacion.cleanup();
+        this.descripcion.setText("");
+    }
 
     public CrearContratos() {
-        super("Crear contratos"); 
-        TABLACREARCONTRATOS =   new DefaultTableModel(new Object[]{"Contrato","Fecha inicio","Fecha terminación","Descripción"},0);
-        initComponents();     
+        super("Crear contratos");
+        TABLACREARCONTRATOS = new DefaultTableModel(new Object[]{"Contrato", "Fecha inicio", "Fecha terminación", "Descripción"}, 0);
+        initComponents();
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         SQL.obtenerContratos();
-         this.boton_actualizar.setEnabled(false);
-    }   
+        this.boton_actualizar.setEnabled(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,70 +154,70 @@ Contratos contrato = new Contratos();
 
     private void nuevo_contratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo_contratoActionPerformed
         // TODO add your handling code here:           
-        
-        if(!this.nombrecontrato.getText().equals("") && this.fecha_inicio.getDate() != null 
-           && this.fecha_finalizacion.getDate() != null && !this.descripcion.getText().equals("")){
-            if(this.fecha_inicio.getDate().before(this.fecha_finalizacion.getDate())){                
+
+        if (!this.nombrecontrato.getText().equals("") && this.fecha_inicio.getDate() != null
+                && this.fecha_finalizacion.getDate() != null && !this.descripcion.getText().equals("")) {
+            if (this.fecha_inicio.getDate().before(this.fecha_finalizacion.getDate())) {
                 contrato.setNombreContrato(this.nombrecontrato.getText());
                 contrato.setFechaInicial(DF.format(this.fecha_inicio.getDate()));
                 contrato.setFechaFinal(DF.format(this.fecha_finalizacion.getDate()));
-                contrato.setDescripcion(this.descripcion.getText());                
-                if(SQL.insertarContrato(contrato.getNombreContrato(),contrato.getFechaInicial(),contrato.getFechaFinal(),contrato.getDescripcion())){
+                contrato.setDescripcion(this.descripcion.getText());
+                if (SQL.insertarContrato(contrato.getNombreContrato(), contrato.getFechaInicial(), contrato.getFechaFinal(), contrato.getDescripcion())) {
                     this.borrarCeldas();
                     this.borrarFilasTabla();
                     SQL.obtenerContratos();
-                    JOptionPane.showMessageDialog(null,"Contrato ingresado correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                }                
-            }else{
-                JOptionPane.showMessageDialog(null,"La fecha de terminación del contrato debe ser mayor a la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
-            }                
-        }else{
-            JOptionPane.showMessageDialog(null,"Debe llenar todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Contrato ingresado correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "La fecha de terminación del contrato debe ser mayor a la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_nuevo_contratoActionPerformed
 
     private void boton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_actualizarActionPerformed
         // TODO add your handling code here:
-        if(!this.nombrecontrato.getText().equals("") && this.fecha_inicio.getDate() != null 
-           && this.fecha_finalizacion.getDate() != null && !this.descripcion.getText().equals("")){
-            if(this.fecha_inicio.getDate().before(this.fecha_finalizacion.getDate())){                
+        if (!this.nombrecontrato.getText().equals("") && this.fecha_inicio.getDate() != null
+                && this.fecha_finalizacion.getDate() != null && !this.descripcion.getText().equals("")) {
+            if (this.fecha_inicio.getDate().before(this.fecha_finalizacion.getDate())) {
                 contrato.setNombreContrato(this.nombrecontrato.getText());
                 contrato.setFechaInicial(DF.format(this.fecha_inicio.getDate()));
                 contrato.setFechaFinal(DF.format(this.fecha_finalizacion.getDate()));
                 contrato.setDescripcion(this.descripcion.getText());
-                if(SQL.actualizarContratos(this.temp_nombre_contrato,contrato.getNombreContrato(),contrato.getFechaInicial(),contrato.getFechaFinal(), contrato.getDescripcion())){
+                if (SQL.actualizarContratos(this.temp_nombre_contrato, contrato.getNombreContrato(), contrato.getFechaInicial(), contrato.getFechaFinal(), contrato.getDescripcion())) {
                     this.borrarCeldas();
                     this.borrarFilasTabla();
                     SQL.obtenerContratos();
-                    JOptionPane.showMessageDialog(null,"Contrato actualizado correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                }               
-            }else{
-                JOptionPane.showMessageDialog(null,"La fecha de terminación del contrato debe ser mayor a la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
-            }                   
-        }else{
-            JOptionPane.showMessageDialog(null,"Debe llenar todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Contrato actualizado correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "La fecha de terminación del contrato debe ser mayor a la fecha de inicio", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_boton_actualizarActionPerformed
 
     private void tablaContratosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaContratosMouseClicked
         // TODO add your handling code here:
-        this.temp_nombre_contrato = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(),0).toString();        
-        Object nombreContrato = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(),0);
-        Object fechaInicio = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(),1);
-        Object fechaFinalizacion = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(),2);
-        Object descripcionContrato = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(),3);
+        this.temp_nombre_contrato = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(), 0).toString();
+        Object nombreContrato = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(), 0);
+        Object fechaInicio = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(), 1);
+        Object fechaFinalizacion = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(), 2);
+        Object descripcionContrato = this.TABLACREARCONTRATOS.getValueAt(this.tablaContratos.getSelectedRow(), 3);
         this.nombrecontrato.setText(nombreContrato.toString());
         this.descripcion.setText(descripcionContrato.toString());
-        try{
+        try {
             this.fecha_inicio.setDate(DF.parse(fechaInicio.toString()));
             this.fecha_finalizacion.setDate(DF.parse(fechaFinalizacion.toString()));
             this.boton_actualizar.setEnabled(true);
-            
-        }catch(ParseException ex){
-            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_tablaContratosMouseClicked
 
     /**

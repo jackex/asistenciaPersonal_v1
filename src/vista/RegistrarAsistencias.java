@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 
 /**
  *
@@ -32,6 +33,8 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
     }
 
     public RegistrarAsistencias(Index index) {
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.horaTitulo();
         this.boton_registrar_ingreso.setEnabled(false);
@@ -93,7 +96,6 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        titulo_tiempo = new javax.swing.JLabel();
         boton_registrar_ingreso = new javax.swing.JButton();
         registrar_salida = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -112,6 +114,9 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         mensajeHuella = new javax.swing.JTextArea();
         DETECCIONHUELLA = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        titulo_tiempo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -123,12 +128,12 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titulo_tiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        titulo_tiempo.setText("AGREGAR ASISTENCIAS HORARIO DE LA MAÑANA");
-        jPanel1.add(titulo_tiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 400, -1));
-
+        boton_registrar_ingreso.setBackground(new java.awt.Color(255, 255, 255));
         boton_registrar_ingreso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         boton_registrar_ingreso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cronometro32px.png"))); // NOI18N
         boton_registrar_ingreso.setText("Registrar ingreso");
@@ -137,8 +142,9 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
                 boton_registrar_ingresoActionPerformed(evt);
             }
         });
-        jPanel1.add(boton_registrar_ingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 200, 60));
+        jPanel1.add(boton_registrar_ingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 530, 200, 60));
 
+        registrar_salida.setBackground(new java.awt.Color(255, 255, 255));
         registrar_salida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         registrar_salida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/calendar-clock-icon32px.png"))); // NOI18N
         registrar_salida.setText("Registrar Salida");
@@ -147,44 +153,53 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
                 registrar_salidaActionPerformed(evt);
             }
         });
-        jPanel1.add(registrar_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 490, 190, 60));
+        jPanel1.add(registrar_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, 190, 60));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Empleado"));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel5.setText("CORREO:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 223, -1, -1));
 
-        CORREO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        CORREO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(CORREO, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 280, 30));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel4.setText("TELÉFONO:");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 182, -1, -1));
 
-        TELEFONO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        TELEFONO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(TELEFONO, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 280, 30));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel3.setText("DIRECCIÓN:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 140, -1, -1));
 
-        DIRECCION.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DIRECCION.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(DIRECCION, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 280, 30));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel2.setText("NOMBRE:");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 94, -1, 20));
 
-        NOMBRE.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        NOMBRE.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(NOMBRE, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 280, 30));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel6.setText("DOCUMENTO:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 48, -1, 30));
 
-        DOCUMENTO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DOCUMENTO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(DOCUMENTO, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 280, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 400, 270));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 400, 270));
 
-        LblFotoPerfil.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Imagen Perfil", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
+        LblFotoPerfil.setBackground(new java.awt.Color(255, 255, 255));
+        LblFotoPerfil.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Imagen Perfil", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        LblFotoPerfil.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         LblImagenPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LblImagenPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user_profile.png"))); // NOI18N
@@ -198,17 +213,18 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
         );
         LblFotoPerfilLayout.setVerticalGroup(
             LblFotoPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LblImagenPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addComponent(LblImagenPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
         );
 
-        jPanel1.add(LblFotoPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 250, 280));
+        jPanel1.add(LblFotoPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 250, 280));
 
         mensajeHuella.setColumns(20);
         mensajeHuella.setRows(5);
         jScrollPane2.setViewportView(mensajeHuella);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 660, 90));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 660, 90));
 
+        DETECCIONHUELLA.setBackground(new java.awt.Color(255, 255, 255));
         DETECCIONHUELLA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         DETECCIONHUELLA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fingerprint_32PX.png"))); // NOI18N
         DETECCIONHUELLA.setText("Iniciar Detección de huella");
@@ -217,7 +233,42 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
                 DETECCIONHUELLAActionPerformed(evt);
             }
         });
-        jPanel1.add(DETECCIONHUELLA, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 270, 50));
+        jPanel1.add(DETECCIONHUELLA, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, 270, 50));
+
+        jPanel3.setBackground(new java.awt.Color(31, 58, 147));
+
+        titulo_tiempo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        titulo_tiempo.setForeground(new java.awt.Color(255, 255, 255));
+        titulo_tiempo.setText("AGREGAR ASISTENCIAS HORARIO DE LA MAÑANA");
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("X");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(titulo_tiempo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(titulo_tiempo))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,7 +280,9 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -287,6 +340,11 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DETECCIONHUELLAActionPerformed
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -332,6 +390,7 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
     private javax.swing.JLabel NOMBRE;
     private javax.swing.JLabel TELEFONO;
     public javax.swing.JButton boton_registrar_ingreso;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -339,6 +398,7 @@ public class RegistrarAsistencias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTextArea mensajeHuella;
     private javax.swing.JButton registrar_salida;

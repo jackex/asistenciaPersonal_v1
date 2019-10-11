@@ -7,6 +7,7 @@ package vista;
 
 import control.SQLEmpleados;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,18 +21,21 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
      */
     SQLEmpleados SQL = new SQLEmpleados(this);
     public DefaultTableModel TABLA;
-    public AgregarTipoCargos(){
-        TABLA = new DefaultTableModel(new Object []{"TIPO DE CARGOS DISPONIBLES"},0);
+
+    public AgregarTipoCargos() {
+        TABLA = new DefaultTableModel(new Object[]{"TIPO DE CARGOS DISPONIBLES"}, 0);
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.setDefaultCloseOperation(AgregarTipoCargos.HIDE_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         SQL.obtenerCargosVentanaActualizar();
     }
-    
-    public void limpiarTabla(){
-        while(TABLA.getRowCount() > 0){
-            for(int x = 0; x < TABLA.getRowCount();x++){
+
+    public void limpiarTabla() {
+        while (TABLA.getRowCount() > 0) {
+            for (int x = 0; x < TABLA.getRowCount(); x++) {
                 TABLA.removeRow(x);
             }
             this.TABLATIPOCARGOS.repaint();
@@ -48,7 +52,6 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TABLATIPOCARGOS = new javax.swing.JTable();
         CAMPOEDITAR = new javax.swing.JTextField();
@@ -57,21 +60,37 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
         BOTONNUEVO = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("TIPOS DE CARGOS");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TABLATIPOCARGOS.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         TABLATIPOCARGOS.setModel(TABLA);
+        TABLATIPOCARGOS.setColumnSelectionAllowed(true);
+        TABLATIPOCARGOS.setGridColor(new java.awt.Color(255, 255, 255));
+        TABLATIPOCARGOS.setSelectionBackground(new java.awt.Color(46, 204, 113));
+        TABLATIPOCARGOS.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        TABLATIPOCARGOS.getTableHeader().setReorderingAllowed(false);
         TABLATIPOCARGOS.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 TABLATIPOCARGOSMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(TABLATIPOCARGOS);
+        TABLATIPOCARGOS.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 468, 238));
+
+        CAMPOEDITAR.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
+        jPanel1.add(CAMPOEDITAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 241, 30));
+
+        BOTONEDITAR.setBackground(new java.awt.Color(255, 255, 255));
         BOTONEDITAR.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         BOTONEDITAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save32px.png"))); // NOI18N
         BOTONEDITAR.setText("Actualizar");
@@ -80,7 +99,12 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
                 BOTONEDITARActionPerformed(evt);
             }
         });
+        jPanel1.add(BOTONEDITAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 188, -1));
 
+        CAMPONUEVOCARGO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
+        jPanel1.add(CAMPONUEVOCARGO, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 241, 30));
+
+        BOTONNUEVO.setBackground(new java.awt.Color(255, 255, 255));
         BOTONNUEVO.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         BOTONNUEVO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/database.png"))); // NOI18N
         BOTONNUEVO.setText("Nuevo");
@@ -89,74 +113,60 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
                 BOTONNUEVOActionPerformed(evt);
             }
         });
+        jPanel1.add(BOTONNUEVO, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, 188, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel2.setText("Actualizar Cargo");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("ACTUALIZAR CARGO");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 140, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel3.setText("Nuevo Cargo");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("NUEVO CARGO");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 110, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(CAMPOEDITAR, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                                        .addComponent(CAMPONUEVOCARGO))
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(BOTONEDITAR, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                    .addComponent(BOTONNUEVO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel2.setBackground(new java.awt.Color(46, 204, 113));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("TIPOS DE CARGOS");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("X");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(BOTONEDITAR, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CAMPOEDITAR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(BOTONNUEVO)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CAMPONUEVOCARGO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jLabel1))
         );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
         );
 
         pack();
@@ -164,43 +174,48 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
 
     private void BOTONEDITARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONEDITARActionPerformed
         // TODO add your handling code here:
-        if(!this.CAMPOEDITAR.getText().equals("")){
-            String cargo = String.valueOf(this.TABLA.getValueAt(TABLATIPOCARGOS.getSelectedRow(),0));
-            if(SQL.actualizarCargos(cargo,this.CAMPOEDITAR.getText())){
+        if (!this.CAMPOEDITAR.getText().equals("")) {
+            String cargo = String.valueOf(this.TABLA.getValueAt(TABLATIPOCARGOS.getSelectedRow(), 0));
+            if (SQL.actualizarCargos(cargo, this.CAMPOEDITAR.getText())) {
                 this.CAMPOEDITAR.setText("");
                 this.limpiarTabla();
                 SQL.obtenerCargosVentanaActualizar();
-                JOptionPane.showMessageDialog(null,"¡El cargo se ha actualizado correctamente!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
-        }
-        }else{
-            JOptionPane.showMessageDialog(null,"¡Debe seleccionar el cargo de la tabla para actualizar!","Mensaje",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡El cargo se ha actualizado correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Debe seleccionar el cargo de la tabla para actualizar!", "Mensaje", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BOTONEDITARActionPerformed
 
     private void BOTONNUEVOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONNUEVOActionPerformed
         // TODO add your handling code here:
-        if(!this.CAMPONUEVOCARGO.getText().equals("")){
-            if(SQL.consultarCargo(this.CAMPONUEVOCARGO.getText()) != true){
+        if (!this.CAMPONUEVOCARGO.getText().equals("")) {
+            if (SQL.consultarCargo(this.CAMPONUEVOCARGO.getText()) != true) {
                 String cargo = this.CAMPONUEVOCARGO.getText().toUpperCase();
-                if(SQL.ingresarCargos(cargo)){
+                if (SQL.ingresarCargos(cargo)) {
                     this.CAMPONUEVOCARGO.setText("");
-                    this.limpiarTabla(); 
+                    this.limpiarTabla();
                     SQL.obtenerCargosVentanaActualizar();
-                    JOptionPane.showMessageDialog(null,"¡El cargo se ha ingresado correctamente!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "¡El cargo se ha ingresado correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }else{
-                JOptionPane.showMessageDialog(null,"¡Ya existe un cargo con este nombre!","Mensaje",JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "¡Ya existe un cargo con este nombre!", "Mensaje", JOptionPane.WARNING_MESSAGE);
             }
-        }else{
-            JOptionPane.showMessageDialog(null,"¡Debe digitar el cargo a ingresar!","Mensaje",JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Debe digitar el cargo a ingresar!", "Mensaje", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_BOTONNUEVOActionPerformed
 
     private void TABLATIPOCARGOSMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TABLATIPOCARGOSMousePressed
         // TODO add your handling code here:
-        this.CAMPOEDITAR.setText(String.valueOf(TABLA.getValueAt(this.TABLATIPOCARGOS.getSelectedRow(),0)));
+        this.CAMPOEDITAR.setText(String.valueOf(TABLA.getValueAt(this.TABLATIPOCARGOS.getSelectedRow(), 0)));
     }//GEN-LAST:event_TABLATIPOCARGOSMousePressed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,7 +262,9 @@ public class AgregarTipoCargos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

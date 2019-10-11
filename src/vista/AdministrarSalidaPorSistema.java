@@ -9,6 +9,7 @@ import control.SQLEmpleados;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,19 +17,24 @@ import javax.swing.table.DefaultTableModel;
  * @author juliancc
  */
 public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
+
     public DefaultTableModel TABLA;
     SQLEmpleados SQL = new SQLEmpleados(this);
     DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+
     /**
      * Creates new form AdministrarSalidaPorSistema
      */
     public AdministrarSalidaPorSistema() {
         super("Consultar cierres por sistema");
-        TABLA = new DefaultTableModel(new Object[]{"DOCUMENTO","NOMBRE EMPLEADO","HORA INGRESO","HORA SALIDA","COMENTARIOS"},0){
-            @Override public boolean isCellEditable(int row, int col){
+        TABLA = new DefaultTableModel(new Object[]{"DOCUMENTO", "NOMBRE EMPLEADO", "HORA INGRESO", "HORA SALIDA", "COMENTARIOS"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
                 return false;
             }
         };
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.agregarComentarios.setEnabled(false);
         this.setDefaultCloseOperation(AdministrarSalidaPorSistema.HIDE_ON_CLOSE);
@@ -36,37 +42,36 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
         this.setResizable(false);
     }
 
-    
-        public void borrarFilasTabla(){
-            while(this.TABLA.getRowCount()>0){
-                for(int j=0;j<this.TABLA.getRowCount();j++){
-                        this.TABLA.removeRow(j);
-                }
-            this.TABLAVISTA.repaint();
+    public void borrarFilasTabla() {
+        while (this.TABLA.getRowCount() > 0) {
+            for (int j = 0; j < this.TABLA.getRowCount(); j++) {
+                this.TABLA.removeRow(j);
             }
+            this.TABLAVISTA.repaint();
         }
-    
-    private void obtenerDatos(){
-             if(this.FECHA_INICIAL.getDate() == null || this.FECHA_FINAL.getDate() == null){
-             JOptionPane.showMessageDialog(null,"Debe llenar todos los campos","Mensaje",JOptionPane.ERROR_MESSAGE);
-         }else{
-             if(this.FECHA_INICIAL.getDate().before(this.FECHA_FINAL.getDate())){
+    }
+
+    private void obtenerDatos() {
+        if (this.FECHA_INICIAL.getDate() == null || this.FECHA_FINAL.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Mensaje", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (this.FECHA_INICIAL.getDate().before(this.FECHA_FINAL.getDate())) {
                 this.borrarFilasTabla();
                 String fecha_inicial = DF.format(this.FECHA_INICIAL.getDate());
                 String fecha_final = DF.format(this.FECHA_FINAL.getDate());
                 SQL.validarComentarioUsuarioPMCerradoPorSistema(fecha_inicial, fecha_final);
-                if(TABLA.getRowCount() > 0){
-                  this.agregarComentarios.setEnabled(true);
-                }else{
-                  this.agregarComentarios.setEnabled(false);
-                  JOptionPane.showMessageDialog(null,"No hay registros cerrados por el sistema para la fecha establecida");
+                if (TABLA.getRowCount() > 0) {
+                    this.agregarComentarios.setEnabled(true);
+                } else {
+                    this.agregarComentarios.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "No hay registros cerrados por el sistema para la fecha establecida");
                 }
-           }else{
-               JOptionPane.showMessageDialog(null,"La fecha inicial debe ser menos a la fecha final","Error",JOptionPane.ERROR_MESSAGE);  
-             }
+            } else {
+                JOptionPane.showMessageDialog(null, "La fecha inicial debe ser menos a la fecha final", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-     }
-    
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,9 +90,11 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
         FECHA_FINAL = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         BTNBUSCAR = new javax.swing.JButton();
         agregarComentarios = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         cambiarComentario.setText("Editar Comentario");
         cambiarComentario.setToolTipText("");
@@ -100,10 +107,13 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TABLAVISTA.setModel(TABLA);
         TABLAVISTA.setComponentPopupMenu(menupopup);
+        TABLAVISTA.setSelectionBackground(new java.awt.Color(31, 58, 147));
         TABLAVISTA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TABLAVISTAMouseClicked(evt);
@@ -111,20 +121,21 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TABLAVISTA);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 48, 820, 248));
-        jPanel1.add(FECHA_INICIAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 331, 190, -1));
-        jPanel1.add(FECHA_FINAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 190, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 820, 248));
+
+        FECHA_INICIAL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
+        jPanel1.add(FECHA_INICIAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 190, 30));
+
+        FECHA_FINAL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 152, 219)));
+        jPanel1.add(FECHA_FINAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, 190, 30));
 
         jLabel1.setText("Fecha Inicial");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 308, 131, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 131, -1));
 
         jLabel2.setText("Fecha Final");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 123, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 123, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("SALIDAS CERRADAS POR EL SISTEMA");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 320, -1));
-
+        BTNBUSCAR.setBackground(java.awt.Color.white);
         BTNBUSCAR.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         BTNBUSCAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search32px.png"))); // NOI18N
         BTNBUSCAR.setText("Buscar");
@@ -133,8 +144,9 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
                 BTNBUSCARActionPerformed(evt);
             }
         });
-        jPanel1.add(BTNBUSCAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 150, 40));
+        jPanel1.add(BTNBUSCAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 340, 150, 40));
 
+        agregarComentarios.setBackground(new java.awt.Color(255, 255, 255));
         agregarComentarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         agregarComentarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/comments_add_32px.png"))); // NOI18N
         agregarComentarios.setText("Guardar Comentario");
@@ -143,17 +155,52 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
                 agregarComentariosActionPerformed(evt);
             }
         });
-        jPanel1.add(agregarComentarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 220, 40));
+        jPanel1.add(agregarComentarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 220, 40));
+
+        jPanel2.setBackground(new java.awt.Color(31, 58, 147));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("SALIDAS CERRADAS POR EL SISTEMA");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("X");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(243, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
 
         pack();
@@ -161,45 +208,58 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
 
     private void BTNBUSCARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBUSCARActionPerformed
         // TODO add your handling code here:
-        this.obtenerDatos();        
+        if (this.FECHA_INICIAL.getDate() == null || this.FECHA_FINAL.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "¡Debe establecer el rango de fechas requeridas!", "Mensaje", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (this.FECHA_INICIAL.getDate().after(this.FECHA_FINAL.getDate())) {
+                JOptionPane.showMessageDialog(null, "!La fecha inicial debe ser menor a la fecha final¡", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                this.obtenerDatos();
+            }
+        }
     }//GEN-LAST:event_BTNBUSCARActionPerformed
 
     private void agregarComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarComentariosActionPerformed
         // TODO add your handling code here:
-             int contador = 0;
-             if(TABLA.getRowCount() > 0){
-                while(contador < TABLA.getRowCount()){
-                            String documento = this.TABLA.getValueAt(contador,0).toString();
-                            String hora_ingreso = this.TABLA.getValueAt(contador,2).toString();
-                            String hora_salida = this.TABLA.getValueAt(contador,3).toString();
-                            String comentario = this.TABLA.getValueAt(contador,4).toString();
-                            SQL.actualizarComentariosPorAdmin(comentario, documento, hora_ingreso, hora_salida);
-                        contador += 1;                        
-                }
-                if(contador == TABLA.getRowCount()){
-                  JOptionPane.showMessageDialog(null,"¡Datos ingresados correctamente!","Mensaje",JOptionPane.INFORMATION_MESSAGE);  
-                }
-             }else{
-                 JOptionPane.showMessageDialog(null,"¡La tabla no tiene registros, seleccione un rango de fecha válido!","Mensaje",JOptionPane.WARNING_MESSAGE);
-             }
+        int contador = 0;
+        if (TABLA.getRowCount() > 0) {
+            while (contador < TABLA.getRowCount()) {
+                String documento = this.TABLA.getValueAt(contador, 0).toString();
+                String hora_ingreso = this.TABLA.getValueAt(contador, 2).toString();
+                String hora_salida = this.TABLA.getValueAt(contador, 3).toString();
+                String comentario = this.TABLA.getValueAt(contador, 4).toString();
+                SQL.actualizarComentariosPorAdmin(comentario, documento, hora_ingreso, hora_salida);
+                contador += 1;
+            }
+            if (contador == TABLA.getRowCount()) {
+                JOptionPane.showMessageDialog(null, "¡Datos ingresados correctamente!", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "¡La tabla no tiene registros, seleccione un rango de fecha válido!", "Mensaje", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_agregarComentariosActionPerformed
 
     private void TABLAVISTAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TABLAVISTAMouseClicked
         // TODO add your handling code here:        
-       // System.out.println(TABLA.getValueAt(this.TABLAVISTA.getSelectedRow(),0));
+        // System.out.println(TABLA.getValueAt(this.TABLAVISTA.getSelectedRow(),0));
     }//GEN-LAST:event_TABLAVISTAMouseClicked
 
     private void cambiarComentarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cambiarComentarioMousePressed
         // TODO add your handling code here:
-        String comentario = JOptionPane.showInputDialog(null,"Digita el nuevo comentario", "Mensaje",JOptionPane.WARNING_MESSAGE);
-        if(comentario != null){
-            TABLA.setValueAt(comentario,this.TABLAVISTA.getSelectedRow(),4);
-        }else{
-              JOptionPane.showMessageDialog(null,"Debe digitar un comentario","Mensaje",JOptionPane.ERROR_MESSAGE);
+        String comentario = JOptionPane.showInputDialog(null, "Digita el nuevo comentario", "Mensaje", JOptionPane.WARNING_MESSAGE);
+        if (comentario != null) {
+            TABLA.setValueAt(comentario, this.TABLAVISTA.getSelectedRow(), 4);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe digitar un comentario", "Mensaje", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
+
+
     }//GEN-LAST:event_cambiarComentarioMousePressed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -246,7 +306,9 @@ public class AdministrarSalidaPorSistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu menupopup;
     // End of variables declaration//GEN-END:variables

@@ -13,18 +13,23 @@ import java.time.LocalTime;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 
 /**
  *
  * @author juliancc
  */
 public class LoginHuella extends javax.swing.JFrame {
-   SQLEmpleados SQL = new SQLEmpleados(this);
-   public String ID;    
+
+    SQLEmpleados SQL = new SQLEmpleados(this);
+    public String ID;
+
     /**
      * Creates new form LoginHuella
      */
     public LoginHuella() {
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         this.horaTitulo();
         this.boton_registrar_ingreso.setEnabled(false);
@@ -32,39 +37,39 @@ public class LoginHuella extends javax.swing.JFrame {
         this.mensajeHuella.setEnabled(false);
         this.setDefaultCloseOperation(ConsultarAsistencias.HIDE_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setResizable(true);
+        this.setResizable(false);
     }
-    
-    public void cerrarVentana(){
+
+    public void cerrarVentana() {
         this.setDefaultCloseOperation(ConsultarAsistencias.HIDE_ON_CLOSE);
     }
-    
-    public void noCerrarVentana(){
+
+    public void noCerrarVentana() {
         this.setDefaultCloseOperation(ConsultarAsistencias.DO_NOTHING_ON_CLOSE);
     }
-    
-        private void horaTitulo(){
-            if(LocalTime.now().isAfter(LocalTime.NOON)){
-                titulo_tiempo.setText("REGISTRAR ASISTENCIAS HORARIO DE LA TARDE");
-            } 
-        }
 
-        public void verificarIngresos(int documento){                  
-            if(SQL.consultarIngresoDeUsuariosAM(documento)){       
-                if(SQL.consultarSalidaDeUsuariosPM(documento)){
-                    this.boton_registrar_ingreso.setEnabled(false);
-                    this.registrar_salida.setEnabled(false);
-                    JOptionPane.showMessageDialog(null,"Este empleado ya completo la asistencia del dia","", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    this.boton_registrar_ingreso.setEnabled(false);
-                    this.registrar_salida.setEnabled(true);
-                }
-            }else{
-                this.boton_registrar_ingreso.setEnabled(true);
-                this.registrar_salida.setEnabled(false);
-            }
+    private void horaTitulo() {
+        if (LocalTime.now().isAfter(LocalTime.NOON)) {
+            titulo_tiempo.setText("REGISTRAR ASISTENCIAS HORARIO DE LA TARDE");
         }
-    
+    }
+
+    public void verificarIngresos(int documento) {
+        if (SQL.consultarIngresoDeUsuariosAM(documento)) {
+            if (SQL.consultarSalidaDeUsuariosPM(documento)) {
+                this.boton_registrar_ingreso.setEnabled(false);
+                this.registrar_salida.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Este empleado ya completo la asistencia del dia", "", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                this.boton_registrar_ingreso.setEnabled(false);
+                this.registrar_salida.setEnabled(true);
+            }
+        } else {
+            this.boton_registrar_ingreso.setEnabled(true);
+            this.registrar_salida.setEnabled(false);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,11 +95,14 @@ public class LoginHuella extends javax.swing.JFrame {
         BTNINICIARHUELLA = new javax.swing.JButton();
         boton_registrar_ingreso = new javax.swing.JButton();
         registrar_salida = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         titulo_tiempo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LblMostrarHuella.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -105,21 +113,25 @@ public class LoginHuella extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel3.setText("DOCUMENTO:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel2.setText("NOMBRE:");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel4.setText("CARGO:");
 
-        DOCUMENTOEMPLEADO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DOCUMENTOEMPLEADO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        NOMBREEMPLEADO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        NOMBREEMPLEADO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        CARGOEMPLEADO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        CARGOEMPLEADO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel5.setText("MUNICIPIO:");
 
-        MUNICIPIOEMPLEADO.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        MUNICIPIOEMPLEADO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -175,6 +187,7 @@ public class LoginHuella extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 446, 80));
 
+        BTNINICIARHUELLA.setBackground(new java.awt.Color(255, 255, 255));
         BTNINICIARHUELLA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         BTNINICIARHUELLA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fingerprint_32PX.png"))); // NOI18N
         BTNINICIARHUELLA.setText("Iniciar Detección de Huella");
@@ -185,6 +198,7 @@ public class LoginHuella extends javax.swing.JFrame {
         });
         jPanel1.add(BTNINICIARHUELLA, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 580, 271, 60));
 
+        boton_registrar_ingreso.setBackground(new java.awt.Color(255, 255, 255));
         boton_registrar_ingreso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         boton_registrar_ingreso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cronometro32px.png"))); // NOI18N
         boton_registrar_ingreso.setText("Registrar ingreso");
@@ -195,6 +209,7 @@ public class LoginHuella extends javax.swing.JFrame {
         });
         jPanel1.add(boton_registrar_ingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 209, 51));
 
+        registrar_salida.setBackground(new java.awt.Color(255, 255, 255));
         registrar_salida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         registrar_salida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/calendar-clock-icon32px.png"))); // NOI18N
         registrar_salida.setText("Registrar salida");
@@ -205,21 +220,50 @@ public class LoginHuella extends javax.swing.JFrame {
         });
         jPanel1.add(registrar_salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, 227, 51));
 
+        jPanel3.setBackground(new java.awt.Color(31, 58, 147));
+
         titulo_tiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        titulo_tiempo.setForeground(new java.awt.Color(255, 255, 255));
         titulo_tiempo.setText("AGREGAR ASISTENCIAS HORARIO DE LA MAÑANA");
-        jPanel1.add(titulo_tiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 400, -1));
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("X");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addComponent(titulo_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(titulo_tiempo))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -228,49 +272,54 @@ public class LoginHuella extends javax.swing.JFrame {
     private void BTNINICIARHUELLAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNINICIARHUELLAActionPerformed
         // TODO add your handling code here:
         int respuesta;
-        respuesta = JOptionPane.showOptionDialog(null,"¿Esta seguro que desea continuar?","Mensaje", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null);
-        if(respuesta == JOptionPane.YES_NO_OPTION){
+        respuesta = JOptionPane.showOptionDialog(null, "¿Esta seguro que desea continuar?", "Mensaje", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (respuesta == JOptionPane.YES_NO_OPTION) {
             this.boton_registrar_ingreso.setEnabled(false);
             this.registrar_salida.setEnabled(false);
             ImageIcon imagen = new ImageIcon("..//imagenes/user_profile.png");
             this.LblMostrarHuella.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.LblMostrarHuella.getWidth(),
-            this.LblMostrarHuella.getHeight(),java.awt.Image.SCALE_DEFAULT)));
+                    this.LblMostrarHuella.getHeight(), java.awt.Image.SCALE_DEFAULT)));
             this.DOCUMENTOEMPLEADO.setText(null);
             this.NOMBREEMPLEADO.setText(null);
             this.CARGOEMPLEADO.setText(null);
             this.mensajeHuella.setText("");
-            this.MUNICIPIOEMPLEADO.setText(""); 
+            this.MUNICIPIOEMPLEADO.setText("");
             this.BTNINICIARHUELLA.setEnabled(false);
             this.noCerrarVentana();
             HuellaLogin HUELLA = new HuellaLogin(this);
             HUELLA.Iniciar();
             HUELLA.start();
-            HUELLA.estadoHuellas();            
+            HUELLA.estadoHuellas();
         }
     }//GEN-LAST:event_BTNINICIARHUELLAActionPerformed
 
     private void boton_registrar_ingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_registrar_ingresoActionPerformed
         // TODO add your handling code here:
-                int id = Integer.parseInt(this.ID);
-                Date horaIngresoAM = new Date();
-                DateFormat formatofecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");      
-                if(SQL.RegistrarHoraIngresoAM(id,formatofecha.format(horaIngresoAM))){
-                    JOptionPane.showMessageDialog(null,"¡Asistencia confirmada satisfactoriamente!");
-                    this.boton_registrar_ingreso.setEnabled(false);
-                    this.registrar_salida.setEnabled(true);
-                }
+        int id = Integer.parseInt(this.ID);
+        Date horaIngresoAM = new Date();
+        DateFormat formatofecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (SQL.RegistrarHoraIngresoAM(id, formatofecha.format(horaIngresoAM))) {
+            JOptionPane.showMessageDialog(null, "¡Asistencia confirmada satisfactoriamente!");
+            this.boton_registrar_ingreso.setEnabled(false);
+            this.registrar_salida.setEnabled(true);
+        }
     }//GEN-LAST:event_boton_registrar_ingresoActionPerformed
 
     private void registrar_salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_salidaActionPerformed
         // TODO add your handling code here:
-                    int id = Integer.parseInt(this.ID);
-                    Date horasalidaPM = new Date();
-                    DateFormat formatofecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");         
-                    if(SQL.RegistrarHoraSalidaPM(id,formatofecha.format(horasalidaPM))){
-                        JOptionPane.showMessageDialog(null,"¡Salida confirmada satisfactoriamente!");
-                        this.registrar_salida.setEnabled(false);
-                    }
+        int id = Integer.parseInt(this.ID);
+        Date horasalidaPM = new Date();
+        DateFormat formatofecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (SQL.RegistrarHoraSalidaPM(id, formatofecha.format(horasalidaPM))) {
+            JOptionPane.showMessageDialog(null, "¡Salida confirmada satisfactoriamente!");
+            this.registrar_salida.setEnabled(false); 
+        }
     }//GEN-LAST:event_registrar_salidaActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -315,12 +364,14 @@ public class LoginHuella extends javax.swing.JFrame {
     public javax.swing.JLabel MUNICIPIOEMPLEADO;
     public javax.swing.JLabel NOMBREEMPLEADO;
     private javax.swing.JButton boton_registrar_ingreso;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextArea mensajeHuella;
     private javax.swing.JButton registrar_salida;
